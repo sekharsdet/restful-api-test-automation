@@ -17,7 +17,7 @@ public class StoreManagementTests extends BaseTest {
     private final String ORDER_URL = "/store/order";
     private final String ORDER_BY_ID_URL = "/store/order/{orderId}";
 
-    @Test(description = "")
+    @Test(description = "verify that able to access the pet inventory")
     public void testInventory() {
         Response response = given().filter(new AllureRestAssured())
                 .get(getBaseUri() + STORE_INVENTORY_URL);
@@ -28,7 +28,7 @@ public class StoreManagementTests extends BaseTest {
         Assert.assertTrue(response.getBody().path("delivered") instanceof Integer);
     }
 
-    @Test
+    @Test(description = "Verify that able to place an order")
     public void testCreateOrder() {
         Order order = CreateOrder.createTheOrder();
         Response response = given().filter(new AllureRestAssured())

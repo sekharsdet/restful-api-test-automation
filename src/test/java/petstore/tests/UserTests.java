@@ -18,7 +18,7 @@ public class UserTests extends BaseTest {
     private final String USER_LOGOUT_URL = "/user/logout";
 
 
-    @Test(description = "")
+    @Test(description = "verify that able to create new user")
     public void testUserCreation() {
         User user = CreateUser.createTheUser();
         Response response = given().filter(new AllureRestAssured())
@@ -43,7 +43,7 @@ public class UserTests extends BaseTest {
         Assert.assertEquals(response.getBody().path("userStatus"), user.getUserStatus());
     }
 
-    @Test(description = "")
+    @Test(description = "verify that user is able to login successfully")
     public void testUserLogin() {
         User user = CreateUser.createTheUser();
         given().filter(new AllureRestAssured())
@@ -60,7 +60,7 @@ public class UserTests extends BaseTest {
         Assert.assertTrue(response.getBody().asString().contains("Logged in user session: "));
     }
 
-    @Test(description = "")
+    @Test(description = "verify that user able to log out successfully")
     public void testUserLogout() {
         // user creation and login is not required for log out scenario
         // The server is not restricting the user login first
