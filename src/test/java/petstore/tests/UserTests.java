@@ -11,7 +11,7 @@ import petstore.models.User;
 
 import static io.restassured.RestAssured.given;
 
-public class UserTests extends BaseTest{
+public class UserTests extends BaseTest {
 
     private final String USER_URL = "/user";
     private final String USER_LOGIN_URL = "/user/login";
@@ -34,17 +34,17 @@ public class UserTests extends BaseTest{
         Assert.assertTrue(response.getBody().path("password") instanceof String);
         Assert.assertTrue(response.getBody().path("phone") instanceof String);
         Assert.assertTrue(response.getBody().path("userStatus") instanceof Integer);
-        Assert.assertEquals(response.jsonPath().getInt("id") , user.getId());
-        Assert.assertEquals(response.getBody().path("username"),user.getUsername());
-        Assert.assertEquals(response.getBody().path("firstName") ,user.getFirstName());
-        Assert.assertEquals(response.getBody().path("lastName") ,user.getLastName());
-        Assert.assertEquals(response.getBody().path("email") ,user.getEmail());
-        Assert.assertEquals(response.getBody().path("password") ,user.getPassword());
-        Assert.assertEquals(response.getBody().path("userStatus") ,user.getUserStatus());
+        Assert.assertEquals(response.jsonPath().getInt("id"), user.getId());
+        Assert.assertEquals(response.getBody().path("username"), user.getUsername());
+        Assert.assertEquals(response.getBody().path("firstName"), user.getFirstName());
+        Assert.assertEquals(response.getBody().path("lastName"), user.getLastName());
+        Assert.assertEquals(response.getBody().path("email"), user.getEmail());
+        Assert.assertEquals(response.getBody().path("password"), user.getPassword());
+        Assert.assertEquals(response.getBody().path("userStatus"), user.getUserStatus());
     }
 
     @Test(description = "")
-    public void testUserLogin(){
+    public void testUserLogin() {
         User user = CreateUser.createTheUser();
         given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
@@ -61,7 +61,7 @@ public class UserTests extends BaseTest{
     }
 
     @Test(description = "")
-    public void testUserLogout(){
+    public void testUserLogout() {
         // user creation and login is not required for log out scenario
         // The server is not restricting the user login first
         User user = CreateUser.createTheUser();

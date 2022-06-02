@@ -3,8 +3,7 @@ package petstore.builders;
 import petstore.models.User;
 
 public class CreateUser {
-    public static User createTheUser()
-    {
+    public static User createTheUser() {
         return User.builder()
                 .id(1)
                 .username("user")

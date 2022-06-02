@@ -21,26 +21,26 @@ public class PetTests extends BaseTest {
     private final String UPLOAD_IMAGE_URL = "/pet/{petId}/uploadImage";
 
 
-    @Test(description = "")
-    public void testPetCreation(){
+    @Test(description = "verify that able to create a new pet record")
+    public void testPetCreation() {
         Pet pet = CreatePet.createThePet();
         Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
         Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
-        Assert.assertEquals(response.jsonPath().getInt("id") , pet.getId());
-        Assert.assertEquals(response.getBody().path("name"),pet.getName());
-        Assert.assertEquals(response.getBody().path("status") ,pet.getStatus());
-        Assert.assertEquals(response.getBody().path("category.id") ,pet.getCategory().getId());
-        Assert.assertEquals(response.getBody().path("category.name") ,pet.getCategory().getName());
-        Assert.assertEquals(response.getBody().path("photoUrls") ,pet.getPhotoUrls());
-        Assert.assertEquals(response.getBody().path("tags[0].id") ,pet.getTags().get(0).getId());
-        Assert.assertEquals(response.getBody().path("tags[0].name") ,pet.getTags().get(0).getName());
+        Assert.assertEquals(response.jsonPath().getInt("id"), pet.getId());
+        Assert.assertEquals(response.getBody().path("name"), pet.getName());
+        Assert.assertEquals(response.getBody().path("status"), pet.getStatus());
+        Assert.assertEquals(response.getBody().path("category.id"), pet.getCategory().getId());
+        Assert.assertEquals(response.getBody().path("category.name"), pet.getCategory().getName());
+        Assert.assertEquals(response.getBody().path("photoUrls"), pet.getPhotoUrls());
+        Assert.assertEquals(response.getBody().path("tags[0].id"), pet.getTags().get(0).getId());
+        Assert.assertEquals(response.getBody().path("tags[0].name"), pet.getTags().get(0).getName());
     }
 
-    @Test(description = "")
-    public void testPetAvailability(){
+    @Test(description = "verify that able to get the statuses of the pets")
+    public void testPetAvailability() {
         Pet pet = CreatePet.createThePet();
         String status = "status";
 
@@ -49,19 +49,18 @@ public class PetTests extends BaseTest {
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
         Response availabilityResponse = given().filter(new AllureRestAssured())
-                .queryParam(status,pet.getStatus()).get(getBaseUri() + FIND_BY_STATUS_URL);
+                .queryParam(status, pet.getStatus()).get(getBaseUri() + FIND_BY_STATUS_URL);
         Assert.assertEquals(HttpStatus.SC_OK, availabilityResponse.statusCode());
-        Assert.assertEquals(pet.getStatus(),availabilityResponse.jsonPath().getString("[0].status"));
+        Assert.assertEquals(pet.getStatus(), availabilityResponse.jsonPath().getString("[0].status"));
     }
 
-    @Test(description = "")
-    public void getPetById()
-    {
+    @Test(description = "verify that able to get the pet details given by id")
+    public void getPetById() {
         String id = "1";
         Response response = given().filter(new AllureRestAssured())
                 .get(getBaseUri() + PET_BY_ID_URL.replace("{petId}", id));
         Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
-        Assert.assertEquals(response.jsonPath().getInt("id") , Integer.parseInt(id));
+        Assert.assertEquals(response.jsonPath().getInt("id"), Integer.parseInt(id));
         Assert.assertTrue(response.getBody().path("name") instanceof String);
         Assert.assertTrue(response.getBody().path("status") instanceof String);
         Assert.assertTrue(response.getBody().path("category.id") instanceof Integer);
@@ -71,9 +70,9 @@ public class PetTests extends BaseTest {
         Assert.assertTrue(response.getBody().path("tags[0].name") instanceof String);
     }
 
-    @Test(description = "")
+    @Test(description = "verify that able to update existing pet details")
     public void testUpdateExistingPet() {
-        int newPetId=2;
+        int newPetId = 2;
         Pet pet = CreatePet.createThePet();
         Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
@@ -84,9 +83,8 @@ public class PetTests extends BaseTest {
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .put(getBaseUri() + PET_URL);
-        Assert.assertEquals(updatedResponse.jsonPath().getInt("id") , newPetId);
-        Assert.assertNotEquals(updatedResponse.jsonPath().getInt("id") , response.jsonPath().getInt("id"));
-
+        Assert.assertEquals(updatedResponse.jsonPath().getInt("id"), newPetId);
+        Assert.assertNotEquals(updatedResponse.jsonPath().getInt("id"), response.jsonPath().getInt("id"));
 
     }
 

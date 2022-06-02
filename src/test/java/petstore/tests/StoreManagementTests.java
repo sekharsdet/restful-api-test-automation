@@ -43,12 +43,12 @@ public class StoreManagementTests extends BaseTest {
         Assert.assertTrue(response.getBody().path("shipDate") instanceof String);
         Assert.assertTrue(response.getBody().path("status") instanceof String);
         Assert.assertTrue(response.getBody().path("complete") instanceof Boolean);
-        Assert.assertEquals(response.getBody().path("id") ,order.getId());
-        Assert.assertEquals(response.getBody().path("petId") ,order.getPetId());
-        Assert.assertEquals(response.getBody().path("quantity") ,order.getQuantity());
-        Assert.assertEquals(response.getBody().path("shipDate") ,order.getShipDate());
-        Assert.assertEquals(response.getBody().path("status") ,order.getStatus());
-        Assert.assertEquals(response.getBody().path("complete") ,order.isComplete());
+        Assert.assertEquals(response.getBody().path("id"), order.getId());
+        Assert.assertEquals(response.getBody().path("petId"), order.getPetId());
+        Assert.assertEquals(response.getBody().path("quantity"), order.getQuantity());
+        Assert.assertEquals(response.getBody().path("shipDate"), order.getShipDate());
+        Assert.assertEquals(response.getBody().path("status"), order.getStatus());
+        Assert.assertEquals(response.getBody().path("complete"), order.isComplete());
     }
 
 }

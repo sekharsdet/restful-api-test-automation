@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreatePet {
-    public static Pet createThePet(){
+    public static Pet createThePet() {
         Category category = Category.builder().id(1).name("Cats").build();
         List<String> photoUrls = new ArrayList<>();
         photoUrls.add("url");
@@ -23,7 +23,7 @@ public class CreatePet {
                 .build();
     }
 
-    private static List<Tag> createTags(){
+    private static List<Tag> createTags() {
         Tag tag = Tag.builder().id(1).name("snoopy").build();
         List<Tag> tags = new ArrayList<>();
         tags.add(tag);

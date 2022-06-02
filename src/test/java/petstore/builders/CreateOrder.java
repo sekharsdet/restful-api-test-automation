@@ -3,8 +3,7 @@ package petstore.builders;
 import petstore.models.Order;
 
 public class CreateOrder {
-    public static Order createTheOrder()
-    {
+    public static Order createTheOrder() {
         return Order.builder()
                 .id(1)
                 .petId(1)
