@@ -1,5 +1,6 @@
 package petstore.tests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
@@ -20,7 +21,7 @@ public class UserTests extends BaseTest{
     @Test(description = "")
     public void testUserCreation() {
         User user = CreateUser.createTheUser();
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(user))
                 .post(getBaseUri() + USER_URL);
@@ -45,11 +46,11 @@ public class UserTests extends BaseTest{
     @Test(description = "")
     public void testUserLogin(){
         User user = CreateUser.createTheUser();
-        given()
+        given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(user))
                 .post(getBaseUri() + USER_URL);
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .param("userName", user.getUsername())
                 .param("password", user.getPassword())
                 .accept(getContentType())
@@ -64,17 +65,17 @@ public class UserTests extends BaseTest{
         // user creation and login is not required for log out scenario
         // The server is not restricting the user login first
         User user = CreateUser.createTheUser();
-        given()
+        given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(user))
                 .post(getBaseUri() + USER_URL);
-        given()
+        given().filter(new AllureRestAssured())
                 .param("userName", user.getUsername())
                 .param("password", user.getPassword())
                 .accept(getContentType())
                 .get(getBaseUri() + USER_LOGIN_URL);
         // above two steps are added like in normal case, where user logins first and later logs out
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .get(getBaseUri() + USER_LOGOUT_URL);
         Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
         Assert.assertTrue(response.getBody().asString().contains("User logged out"));

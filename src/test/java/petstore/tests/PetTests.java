@@ -1,5 +1,6 @@
 package petstore.tests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
@@ -23,7 +24,7 @@ public class PetTests extends BaseTest {
     @Test(description = "")
     public void testPetCreation(){
         Pet pet = CreatePet.createThePet();
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
@@ -43,11 +44,12 @@ public class PetTests extends BaseTest {
         Pet pet = CreatePet.createThePet();
         String status = "status";
 
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
-        Response availabilityResponse = given().queryParam(status,pet.getStatus()).get(getBaseUri() + FIND_BY_STATUS_URL);
+        Response availabilityResponse = given().filter(new AllureRestAssured())
+                .queryParam(status,pet.getStatus()).get(getBaseUri() + FIND_BY_STATUS_URL);
         Assert.assertEquals(HttpStatus.SC_OK, availabilityResponse.statusCode());
         Assert.assertEquals(pet.getStatus(),availabilityResponse.jsonPath().getString("[0].status"));
     }
@@ -56,7 +58,8 @@ public class PetTests extends BaseTest {
     public void getPetById()
     {
         String id = "1";
-        Response response = given().get(getBaseUri() + PET_BY_ID_URL.replace("{petId}", id));
+        Response response = given().filter(new AllureRestAssured())
+                .get(getBaseUri() + PET_BY_ID_URL.replace("{petId}", id));
         Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
         Assert.assertEquals(response.jsonPath().getInt("id") , Integer.parseInt(id));
         Assert.assertTrue(response.getBody().path("name") instanceof String);
@@ -70,14 +73,14 @@ public class PetTests extends BaseTest {
 
     @Test(description = "")
     public void testUpdateExistingPet() {
+        int newPetId=2;
         Pet pet = CreatePet.createThePet();
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
-        int newPetId=2;
         pet.setId(newPetId);
-        Response updatedResponse = given()
+        Response updatedResponse = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .put(getBaseUri() + PET_URL);

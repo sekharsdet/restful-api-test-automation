@@ -1,5 +1,6 @@
 package petstore.tests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
@@ -18,7 +19,7 @@ public class StoreManagementTests extends BaseTest {
 
     @Test(description = "")
     public void testInventory() {
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .get(getBaseUri() + STORE_INVENTORY_URL);
         Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
         System.out.println(response.asString());
@@ -30,7 +31,7 @@ public class StoreManagementTests extends BaseTest {
     @Test
     public void testCreateOrder() {
         Order order = CreateOrder.createTheOrder();
-        Response response = given()
+        Response response = given().filter(new AllureRestAssured())
                 .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(order))
                 .post(getBaseUri() + ORDER_URL);
