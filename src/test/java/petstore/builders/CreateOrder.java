@@ -9,7 +9,7 @@ public class CreateOrder {
                 .id(1)
                 .petId(1)
                 .quantity(5)
-                .shipDate("Thu Jun 02 2022 14:04:58 GMT+0200 (Central European Summer Time)")
+                .shipDate("2022-06-02T16:24:57.926+00:00")
                 .status("approved")
                 .complete(false)
                 .build();

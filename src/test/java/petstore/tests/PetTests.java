@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
 
-public class PetTest extends BaseTest {
+public class PetTests extends BaseTest {
     private final String PET_URL = "/pet";
     private final String FIND_BY_STATUS_URL = "/pet/findByStatus";
     private final String FIND_BY_TAGS_URL = "/pet/findByTags";
@@ -24,7 +24,7 @@ public class PetTest extends BaseTest {
     public void testPetCreation(){
         Pet pet = CreatePet.createThePet();
         Response response = given()
-                .headers(HttpHeaders.CONTENT_TYPE, "application/json")
+                .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
         Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
@@ -44,7 +44,7 @@ public class PetTest extends BaseTest {
         String status = "status";
 
         Response response = given()
-                .headers(HttpHeaders.CONTENT_TYPE, "application/json")
+                .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
         Response availabilityResponse = given().queryParam(status,pet.getStatus()).get(getBaseUri() + FIND_BY_STATUS_URL);
@@ -72,13 +72,13 @@ public class PetTest extends BaseTest {
     public void testUpdateExistingPet() {
         Pet pet = CreatePet.createThePet();
         Response response = given()
-                .headers(HttpHeaders.CONTENT_TYPE, "application/json")
+                .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .post(getBaseUri() + PET_URL);
         int newPetId=2;
         pet.setId(newPetId);
         Response updatedResponse = given()
-                .headers(HttpHeaders.CONTENT_TYPE, "application/json")
+                .headers(HttpHeaders.CONTENT_TYPE, getContentType())
                 .body(pojoToJson(pet))
                 .put(getBaseUri() + PET_URL);
         Assert.assertEquals(updatedResponse.jsonPath().getInt("id") , newPetId);
