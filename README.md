@@ -1,4 +1,7 @@
 # restful-api-test-automation
+
+Task 1 (Monefy App Exploratory testing charters are placed in **ExploratoryTesting.md** )
+
 ## Prerequisites
 
 - Java >=12 
