@@ -36,4 +36,4 @@ allure serve
   - Checking the inventory 
   - Placing an order
 ### Tests
-tests are located at `restful-api-test-automation/src/test/java/petstore/tests`
+tests are located at `/src/test/java/petstore/tests`
